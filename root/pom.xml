@@ -1,0 +1,86 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>tales.samples</groupId>
+  <artifactId>tales.samples.root</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>Root Tales Samples Project</name>
+  <description>Root project for the Tales Samples Repository</description>
+  <url>https://github.com/Talvish/Tales-Samples</url>
+  
+  <licenses>
+    <license>
+      <name>The Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <name>Joseph Molnar</name>
+      <email>josephmolnar@hotmail.com</email>
+      <organization>n/a</organization>
+      <organizationUrl>https://github.com/Talvish/</organizationUrl>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git:git@github.com:Talvish/Tales.git</connection>
+    <developerConnection>scm:git:git@github.com:example/Talvish/Tales.git</developerConnection>
+    <url>git@github.com:Talvish/Tales.git</url>
+  </scm>
+
+  <dependencyManagement>
+    <dependencies>
+        <dependency>
+	   	    <groupId>tales</groupId>
+	   	    <artifactId>tales.common</artifactId>
+	   	    <version>1.5.0-SNAPSHOT</version>
+	   	</dependency>
+    	<dependency>
+	   	    <groupId>tales</groupId>
+	   	    <artifactId>tales.client</artifactId>
+	   	    <version>1.5.0-SNAPSHOT</version>
+	   	</dependency>
+	   	<dependency>
+	   	    <groupId>tales</groupId>
+	   	    <artifactId>tales.services</artifactId>
+	   	    <version>1.5.0-SNAPSHOT</version>
+	   	</dependency>
+	   	<dependency>
+	   	    <groupId>tales.rigs</groupId>
+	   	    <artifactId>tales.rigs.object_id_client</artifactId>
+	   	    <version>0.0.1-SNAPSHOT</version>
+	   	</dependency>
+	  	<dependency>
+	    	<groupId>joda-time</groupId>
+	    	<artifactId>joda-time</artifactId>
+	    	<version>2.4</version>
+		</dependency>  
+		<dependency>
+	    	<groupId>com.google.guava</groupId>
+	    	<artifactId>guava-jdk5</artifactId>
+	    	<version>17.0</version>
+		</dependency>	
+		<dependency>
+		    <groupId>com.google.code.gson</groupId>
+	    	<artifactId>gson</artifactId>
+	    	<version>2.2.4</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.slf4j</groupId>
+	    	<artifactId>slf4j-api</artifactId>
+	    	<version>1.7.7</version>
+		</dependency>
+		<dependency>
+    		<groupId>ch.qos.logback</groupId>
+    		<artifactId>logback-classic</artifactId>
+    		<version>1.1.2</version>
+		</dependency>		
+    </dependencies>
+  </dependencyManagement>
+  
+  <modules>
+    <module>../user_client</module>
+    <module>../user_service</module>
+  </modules>
+  
+</project>
