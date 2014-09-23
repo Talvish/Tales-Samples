@@ -21,6 +21,8 @@ import java.util.Map;
 
 import com.google.common.base.Preconditions;
 import com.tales.businessobjects.ObjectId;
+import com.tales.rigs.objectid.client.ObjectIdManager;
+import com.tales.system.configuration.ConfigurationManager;
 
 /**
  * The engine is the component that actually does the work
@@ -33,12 +35,19 @@ import com.tales.businessobjects.ObjectId;
  * @author Joseph Molnar
  */
 public class UserEngine {
-	// TODO: this needs to be updated to to proper persistence
-	
 	private UserEngineStatus status = new UserEngineStatus( );
-	private Map<ObjectId, User> storage = new HashMap<ObjectId, User>( );
+	private Map<ObjectId, User> storage = new HashMap<ObjectId, User>( ); // yes, fake storage
+	private ObjectIdManager oidManager = null;
 	
-	public UserEngine( ) {
+	public UserEngine( ConfigurationManager theConfigManager ) {
+		Preconditions.checkNotNull( theConfigManager, "need a config manager to set things up" );
+		
+		String serviceEndpoint = theConfigManager.getStringValue( "id_service.endpoint" ); // no default, since we need it to run
+		Long idRequestAmount = theConfigManager.getLongValue( "id_service.request_amount", 100l );
+		Long idRequestThreshold = theConfigManager.getLongValue( "id_service.request_threshold", 20l );
+    	
+    	oidManager = new ObjectIdManager( idRequestAmount, idRequestThreshold, serviceEndpoint, "UserService/1.0");
+
 		// since we aren't building a real storage system
 		// we are faking a storage system by using a map
 		// and adding a few existing users
@@ -85,13 +94,21 @@ public class UserEngine {
 	 * Creates the user in storage. The parameters are not forced.
 	 */
 	public User createUser( String theFirstName, String theLastName ) {
-		User user = new User( new ObjectId( 3, 1, 100 ) );
+		User user;
 		
-		user.setFirstName( theFirstName );
-		user.setLastName( theLastName );
-		storage.put( user.getId(), user);
-		status.recordCreatedUser(); // update our status block
-		return user;
+		try {
+			user = new User( oidManager.generateObjectId( User.USER_TYPE_NAME ) );
+		
+			user.setFirstName( theFirstName );
+			user.setLastName( theLastName );
+			storage.put( user.getId(), user);
+			status.recordCreatedUser(); // update our status block
+			return user;
+
+		} catch (InterruptedException e) {
+			// this shouldnt' have happened, no threads are killing things
+			throw new IllegalStateException( "being interrupted" );
+		}
 	}
 
 	/**

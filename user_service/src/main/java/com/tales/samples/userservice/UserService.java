@@ -60,7 +60,7 @@ public class UserService extends HttpService {
 		HttpInterface httpInterface = new HttpInterface( "public", this );		
 		this.interfaceManager.register( httpInterface );
 		
-		userEngine = new UserEngine();
+		userEngine = new UserEngine( this.getConfigurationManager( ) );
 		httpInterface.bind( new EnableHeaderOverridesFilter(), "/user" ); // we are in debug mode, so let's allow header overrides
 		httpInterface.bind( new UserResource( userEngine ), "/user" );
 		// engine's typically have their own status block and those need to be

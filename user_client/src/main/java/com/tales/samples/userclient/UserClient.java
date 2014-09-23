@@ -57,20 +57,40 @@ public class UserClient extends ResourceClient {
 		// now we prepare the client for talking to the server
 		String serviceBase = configurationManager.getStringValue( "user_service.base_url" ); // no default, since we need it to run
 
-    	UserClient client = new UserClient( serviceBase, "UserAgentSample/1.0" );
-    	
+    	UserClient client = new UserClient( serviceBase, "UserClient/1.0" );
+
     	// client.setHeaderOverride( "Authorization", "random" ); //<= for testing, perhaps want to override this value, assuming server allows overrides
-    	
-    	// client has been created, so let's load a well known user
-    	ResourceResult<User> result = client.getUser( new ObjectId( 1, 1, 100 ) );
-    	if( result.getResult() != null ) {
-    		logger.debug( "Found user: '{}'", result.getResult().getFirstName( ) );
-    		result.getResult().setFirstName( "Bilbo" );
-    		result = client.updateUser( result.getResult() );
-    		logger.debug( "Updated user: '{}'", result.getResult().getFirstName( ) );
-    	} else {
-    		logger.debug( "Did not find user." );
-    	}
+
+    	// next we see what mode we are in, setup or not setup
+		String operation = configurationManager.getStringValue( "operation", "update_user" );
+		
+		ResourceResult<User> result;
+		
+		switch( operation ) {
+		case "update_user": 
+	    	result = client.getUser( new ObjectId( 1, 1, 100 ) );
+	    	if( result.getResult() != null ) {
+	    		logger.debug( "Found user: '{}'/'{}'", result.getResult().getId(), result.getResult().getFirstName( ) );
+	    		result.getResult().setFirstName( "Bilbo" );
+	    		result = client.updateUser( result.getResult() );
+	    		logger.debug( "Updated user: '{}'", result.getResult().getFirstName( ) );
+	    	} else {
+	    		logger.debug( "Did not find user." );
+	    	}
+	    	break;
+		case "create_user":
+	    	result = client.createUser( "Jimmy",  "McWhalter" );
+	    	if( result.getResult() != null ) {
+	    		logger.debug( "Created user: '{}'/'{}'", result.getResult().getId(), result.getResult().getFirstName( ) );
+	    	} else {
+	    		logger.debug( "Did not create user." );
+	    	}
+			break;
+
+		default:
+			break;
+		}
+				
     	// TODO: this doesn't exit at the end of the main here, need to understand why
     	//	     (which is why I added the System.exit(0)
     	// TODO: one time when this ran it throw some form of SSL EOF related error that 
@@ -92,17 +112,22 @@ public class UserClient extends ResourceClient {
 		super( theEndpoint, "/user", "20140124", theUserAgent, true ); // we are allowing untrusted SSL since the sample self-cert'ed
 		
 		// we now define the methods that we are going to expose for calling
-		this.methods = new ResourceMethod[ 2 ];
+		this.methods = new ResourceMethod[ 3 ];
 		
 		this.methods[ 0 ] = this.defineMethod( "get_user", User.class, HttpVerb.GET, "users/{id}" )
 				.definePathParameter("id", ObjectId.class )
 				.defineHeaderParameter( "Authorization", String.class );
 
 		this.methods[ 1 ] = this.defineMethod( "update_user", User.class, HttpVerb.POST, "users/{id}/update" )
-				.definePathParameter("id", ObjectId.class )
+				.definePathParameter( "id", ObjectId.class )
 				.defineBodyParameter( "user", User.class )
 				.defineHeaderParameter( "Authorization", String.class );
-	}
+
+		this.methods[ 2 ] = this.defineMethod( "create_user", User.class, HttpVerb.POST, "users/create" )
+				.defineBodyParameter( "first_name", String.class )
+				.defineBodyParameter( "last_name", String.class )
+				.defineHeaderParameter( "Authorization", String.class );
+}
 	
 	/**
 	 * Requests a particular user.
@@ -128,6 +153,22 @@ public class UserClient extends ResourceClient {
 		Preconditions.checkNotNull( theUser, "need a user to be able to update" );
 		return this.createRequest( this.methods[ 1 ], theUser.getId() )
 				.setBodyParameter( "user", theUser )
+				.setHeaderParameter( "Authorization", this.authToken )
+				.execute();
+	}
+	
+	/**
+	 * A call to create a new user
+	 * @param theFirstName the first name of the user
+	 * @param theLastName the last name of the user
+	 * @return the freshly created user
+	 * @throws InterruptedException thrown if the calling thread is interrupted
+	 */
+	public ResourceResult<User> createUser( String theFirstName, String theLastName ) throws InterruptedException {
+		Preconditions.checkArgument( !Strings.isNullOrEmpty( theFirstName ), "to create a user you need a first name" );
+		return this.createRequest( this.methods[ 2 ] )
+				.setBodyParameter( "first_name", theFirstName )
+				.setBodyParameter( "last_name", theLastName )
 				.setHeaderParameter( "Authorization", this.authToken )
 				.execute();
 	}

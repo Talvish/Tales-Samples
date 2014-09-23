@@ -25,6 +25,8 @@ import com.tales.businessobjects.ObjectId;
  *
  */
 public class User extends BusinessObjectBase {
+	public final static String USER_TYPE_NAME = "user";
+	
 	// TODO: this needs to be updated to make use of the storage system
 	private String firstName;
 	private String lastName;
