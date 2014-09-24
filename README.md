@@ -6,9 +6,9 @@ This repository contains a set of samples making use of the Tales framework and 
 <ol>
 <li>Simple Service</li>
 <li>Multiversion Service</li>
-<li>User Service / Client (requires a running ObjectId Service from Tales - Rigs</li>
+<li>User Service / Client (requires a running ObjectId Service from Tales - Rigs)</li>
 <li>Complex Service</li>
-<li>Website Service (early version in part due to Tales minimal support)</li>
+<li>Website Service</li>
 </ol>
 
 Related Repositories
