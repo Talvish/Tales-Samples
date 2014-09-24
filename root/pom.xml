@@ -81,6 +81,10 @@
   <modules>
     <module>../user_client</module>
     <module>../user_service</module>
+    <module>../website_service</module>
+    <module>../simple_service</module>
+    <module>../multiversion_service</module>
+    <module>../complex_service</module>
   </modules>
   
 </project>

@@ -1,0 +1,123 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>tales.samples.website_service</artifactId>
+  <name>Sample Web Service</name>
+  <description>A sample showing the use of the Tales Framework to create a website.</description>
+
+  <parent>
+    <groupId>tales.samples</groupId>
+    <artifactId>tales.samples.root</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <relativePath>../root/pom.xml</relativePath>  
+  </parent>
+  
+  <build>
+    <sourceDirectory>src/main/java</sourceDirectory>
+    <plugins>
+      	<plugin>
+        	<artifactId>maven-compiler-plugin</artifactId>
+        	<version>3.1</version>
+        	<configuration>
+          	<source>1.8</source>
+          	<target>1.8</target>
+        	</configuration>
+      	</plugin>
+      	<plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <executions>
+                <execution>
+                    <id>copy-dependencies</id>
+                    <phase>prepare-package</phase>
+                    <goals>
+                        <goal>copy-dependencies</goal>
+                    </goals>
+                    <configuration>
+                        <outputDirectory>${project.build.directory}/dependencies</outputDirectory>
+                        <overWriteReleases>false</overWriteReleases>
+                        <overWriteSnapshots>false</overWriteSnapshots>
+                        <overWriteIfNewer>true</overWriteIfNewer>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jar-plugin</artifactId>
+            <configuration>
+                <archive>
+                    <manifest>
+                        <addClasspath>true</addClasspath>
+                        <classpathPrefix>dependencies/</classpathPrefix>
+                        <mainClass>com.tales.samples.websiteservice.WebsiteService</mainClass>
+                    </manifest>
+			        <manifestEntries>
+			            <Class-Path>config/</Class-Path>
+			        </manifestEntries>                    
+                </archive>
+            </configuration>
+        </plugin>
+        <plugin>
+        	<groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-resources-plugin</artifactId>
+			<executions>
+          		<execution>
+            		<id>copy-resources</id>
+            		<!-- here the phase you need -->
+            		<phase>validate</phase>
+            		<goals>
+              			<goal>copy-resources</goal>
+            		</goals>
+            		<configuration>
+              			<outputDirectory>${project.build.directory}/config</outputDirectory>
+              			<resources>          
+                			<resource>
+                  				<directory>src/main/config</directory>
+                  				<filtering>false</filtering>
+                			</resource>
+              			</resources>              
+            		</configuration>            
+          		</execution>
+          		<execution>
+            		<id>copy-site</id>
+            		<!-- here the phase you need -->
+            		<phase>validate</phase>
+            		<goals>
+              			<goal>copy-resources</goal>
+            		</goals>
+            		<configuration>
+              			<outputDirectory>${project.build.directory}/website</outputDirectory>
+              			<resources>          
+                			<resource>
+                  				<directory>src/website</directory>
+                  				<filtering>false</filtering>
+                			</resource>
+              			</resources>              
+            		</configuration>            
+          		</execution>
+
+        	</executions>
+      	</plugin>
+    </plugins>
+  </build>
+
+  <dependencies>
+	<dependency>
+		<groupId>tales</groupId>
+		<artifactId>tales.common</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>tales</groupId>
+		<artifactId>tales.services</artifactId>
+	</dependency>
+  	<dependency>
+    	<groupId>joda-time</groupId>
+    	<artifactId>joda-time</artifactId>
+	</dependency> 
+	<dependency>
+    	<groupId>ch.qos.logback</groupId>
+    	<artifactId>logback-classic</artifactId>
+    </dependency>	
+  </dependencies> 
+  
+</project>
