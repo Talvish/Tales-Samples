@@ -85,6 +85,7 @@
     <module>../simple_service</module>
     <module>../multiversion_service</module>
     <module>../complex_service</module>
+    <module>../servlet_service</module>
   </modules>
   
 </project>
