@@ -72,7 +72,7 @@ public class UserResource {
 			@PathParam( name="id" )ObjectId theId, 
 			@HeaderParam( name="Authorization" )String theAuthToken ) {
 		Conditions.checkAuthorization( validateAuthorization( theAuthToken ), "Sample", "unauthorized attempt to access resource" ); // if invalid, throws AuthorizationException which turns into HTTP status code 401
-		Conditions.checkParameter( theId != null , "id", "an id must be given" ); // if invalid, throws InvalidParameterException, which turns into HTTP status code 400
+		Conditions.checkParameterNotNull( theId , "id", "an id must be given" ); // if invalid, throws InvalidParameterException, which turns into HTTP status code 400
 		
 		User user = engine.getUser( theId );
 		// public interface doesn't support sending soft-deleted entities
@@ -103,14 +103,14 @@ public class UserResource {
 	 */
 	@ResourceOperation( name="create_user", path="GET | POST : users/create" ) // supporting GET just so a browser can easily be used for manual testing
 	public TransportUser createUser( 
-			 @RequestParam( name="first_name" )String theFirstName, 
-			 @RequestParam( name="last_name" )String theLastName,
+			 @RequestParam( name="user" )TransportUser theUser, 
 			 @HeaderParam( name="Authorization" )String theAuthToken ) {
 		Conditions.checkAuthorization( validateAuthorization( theAuthToken ), "Sample", "unauthorized attempt to access resource" ); 
-		Conditions.checkParameter( !Strings.isNullOrEmpty( theFirstName ), "first_name", "first name must be provided" );
-		Conditions.checkParameter( !Strings.isNullOrEmpty( theLastName ), "last_name", "last name must be provided" );
+		Conditions.checkParameterNotNull( theUser, "user", "first name must be provided" );
+		Conditions.checkParameter( theUser.getId() == null, "user.id", "user id must be null" );
+		Conditions.checkParameter( !Strings.isNullOrEmpty( theUser.getFirstName() ), "user.first_name", "first name must be provided" );
 		
-		return TransportUser.toTransportUser( engine.createUser( theFirstName, theLastName ) );
+		return TransportUser.toTransportUser( engine.createUser( TransportUser.toEngineUser(theUser) ) );
 		
 		// TODO: consider adding custom response for a 201 and/or consider the operation setting success response code
 	}
@@ -124,8 +124,8 @@ public class UserResource {
 			@RequestParam( name="user" )TransportUser theUser,
 			@HeaderParam( name="Authorization" )String theAuthToken ) {
 		Conditions.checkAuthorization( validateAuthorization( theAuthToken ), "Sample", "unauthorized attempt to access resource" ); 
-		Conditions.checkParameter( theId != null, "id", "an id must be given" );
-		Conditions.checkParameter( theUser != null, "user", "a user must be given" );
+		Conditions.checkParameterNotNull( theId, "id", "an id must be given" );
+		Conditions.checkParameterNotNull( theUser, "user", "a user must be given" );
 		Conditions.checkParameter( theId.equals( theUser.getId( ) ), "id", "path id '%s' does not match the given user id '%s'", theId, theUser.getId() );
 		
 		User user = engine.updateUser( TransportUser.toEngineUser( theUser ) );

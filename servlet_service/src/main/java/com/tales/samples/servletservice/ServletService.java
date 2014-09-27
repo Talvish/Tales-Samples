@@ -31,7 +31,7 @@ public class ServletService extends HttpService {
 	 * Protected constructor called by the main below.
 	 */
 	protected ServletService( ) {
-		super( "servlet_service", "Servlet Service", "A Tales service demonstrating the hosting a contracted Servlet." );
+		super( "servlet_service", "Servlet Service", "A Tales service demonstrating the hosting of a contracted Servlet." );
 	}
 	
 	/**

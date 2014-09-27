@@ -15,6 +15,8 @@
 // ***************************************************************************
 package com.tales.samples.userservice;
 
+import java.time.LocalDate;
+
 import com.tales.businessobjects.BusinessObjectBase;
 import com.tales.businessobjects.ObjectId;
 
@@ -29,14 +31,18 @@ public class User extends BusinessObjectBase {
 	
 	// TODO: this needs to be updated to make use of the storage system
 	private String firstName;
+	private String middleName;
 	private String lastName;
+	
+	public LocalDate birthdate;
+	
 	private boolean deleted = false;
 	
 	/**
-	 * A constructor used for serialization purposes.
+	 * A constructor used for serialization
+	 * and for updating users.
 	 */
-	@SuppressWarnings("unused") 
-	private User( ) {
+	public User( ) {
 	}
 	
 	/**
@@ -62,6 +68,23 @@ public class User extends BusinessObjectBase {
 	}
 	
 	/**
+	 * Gets the middle name.
+	 * @return the middle name
+	 */
+	public String getMiddleName( ) {
+		return middleName;
+	}
+	
+	/**
+	 * Sets the middle name
+	 * @param theMiddleName the value to set the middle name to
+	 */
+	public void setMiddleName( String theMiddleName ) {
+		middleName = theMiddleName;
+		this.indicateModified( );
+	}
+	
+	/**
 	 * Returns the last name.
 	 */
 	public String getLastName( ) {
@@ -73,6 +96,23 @@ public class User extends BusinessObjectBase {
 	 */
 	public void setLastName( String theLastName ) {
 		lastName = theLastName;
+		this.indicateModified();
+	}
+	
+	/**
+	 * Gets the birthdate.
+	 * @return the birthdate 
+	 */
+	public LocalDate getBirthdate( ) {
+		return birthdate;
+	}
+	
+	/**
+	 * Sets the birthdate.
+	 * @param theBirthdate the birthdate
+	 */
+	public void setBirthdate( LocalDate theBirthdate ) {
+		birthdate = theBirthdate;
 		this.indicateModified();
 	}
 	

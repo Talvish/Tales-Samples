@@ -15,12 +15,13 @@
 // ***************************************************************************
 package com.tales.samples.userclient;
 
+import java.time.LocalDate;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
-
 import com.tales.businessobjects.ObjectId;
 import com.tales.client.http.ResourceClient;
 import com.tales.client.http.ResourceMethod;
@@ -79,7 +80,13 @@ public class UserClient extends ResourceClient {
 	    	}
 	    	break;
 		case "create_user":
-	    	result = client.createUser( "Jimmy",  "McWhalter" );
+			User user = new User( );
+			
+			user.setFirstName( "Jimmy" );
+			user.setMiddleName( "Scott" );
+			user.setLastName( "McWhalter" );
+			user.setBirthdate( LocalDate.of( 1992, 1, 31 ) );
+	    	result = client.createUser( user );
 	    	if( result.getResult() != null ) {
 	    		logger.debug( "Created user: '{}'/'{}'", result.getResult().getId(), result.getResult().getFirstName( ) );
 	    	} else {
@@ -124,8 +131,7 @@ public class UserClient extends ResourceClient {
 				.defineHeaderParameter( "Authorization", String.class );
 
 		this.methods[ 2 ] = this.defineMethod( "create_user", User.class, HttpVerb.POST, "users/create" )
-				.defineBodyParameter( "first_name", String.class )
-				.defineBodyParameter( "last_name", String.class )
+				.defineBodyParameter( "user", User.class )
 				.defineHeaderParameter( "Authorization", String.class );
 }
 	
@@ -164,11 +170,12 @@ public class UserClient extends ResourceClient {
 	 * @return the freshly created user
 	 * @throws InterruptedException thrown if the calling thread is interrupted
 	 */
-	public ResourceResult<User> createUser( String theFirstName, String theLastName ) throws InterruptedException {
-		Preconditions.checkArgument( !Strings.isNullOrEmpty( theFirstName ), "to create a user you need a first name" );
+	public ResourceResult<User> createUser( User theUser) throws InterruptedException {
+		Preconditions.checkNotNull( theUser, "need a user" );
+		Preconditions.checkArgument( theUser.getId( ) == null, "user's id must be null" );
+		Preconditions.checkArgument( !Strings.isNullOrEmpty( theUser.getFirstName() ), "to create a user you need a first name" );
 		return this.createRequest( this.methods[ 2 ] )
-				.setBodyParameter( "first_name", theFirstName )
-				.setBodyParameter( "last_name", theLastName )
+				.setBodyParameter( "user", theUser )
 				.setHeaderParameter( "Authorization", this.authToken )
 				.execute();
 	}

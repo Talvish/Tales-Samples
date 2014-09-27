@@ -15,6 +15,9 @@
 // ***************************************************************************
 package com.tales.samples.userservice;
 
+import java.time.LocalDate;
+
+import com.google.common.base.Preconditions;
 import com.tales.businessobjects.BusinessObjectBase;
 import com.tales.businessobjects.ObjectId;
 import com.tales.contracts.data.DataContract;
@@ -24,7 +27,9 @@ import com.tales.contracts.data.DataMember;
 @DataContract( name ="com.tales.transport.user")
 public class TransportUser extends BusinessObjectBase {
 	@DataMember( name = "first_name" ) private String firstName;
+	@DataMember( name = "middle_name" ) private String middleName;
 	@DataMember( name = "last_name" ) private String lastName;
+	@DataMember( name = "birthdate" ) private LocalDate birthdate;
 	
 	/**
 	 * A constructor used for serialization purposes.
@@ -41,6 +46,8 @@ public class TransportUser extends BusinessObjectBase {
 		super( theUser );
 		firstName = theUser.getFirstName();
 		lastName = theUser.getLastName();
+		middleName = theUser.getMiddleName();
+		birthdate = theUser.getBirthdate();
 	}
 	
 	/**
@@ -58,24 +65,47 @@ public class TransportUser extends BusinessObjectBase {
 	}
 	
 	/**
+	 * Gets the middle name.
+	 * @return the middle name
+	 */
+	public String getMiddleName( ) {
+		return middleName;
+	}
+	
+	/**
 	 * Returns the last name.
 	 */
 	public String getLastName( ) {
 		return lastName;
 	}
 	
+	/**
+	 * Gets the birthdate.
+	 * @return the birthdate 
+	 */
+	public LocalDate getBirthdate( ) {
+		return birthdate;
+	}
 	
 	public static User toEngineUser( TransportUser theUser ) {
+		Preconditions.checkNotNull( theUser, "need a user" );
 		// TODO: need to do parameter validation
-		User storageUser = new User( theUser.getId( ) );
+		User storageUser;
+		if( theUser.getId( ) == null ) {
+			// means it was created
+			storageUser = new User( );
+		} else {
+			// means it was updated
+			storageUser = new User( theUser.getId( ) );
+		}
 		storageUser.setFirstName( theUser.getFirstName());
+		storageUser.setMiddleName( theUser.getMiddleName());
 		storageUser.setLastName(theUser.getLastName());
-
-		// NOTE: the timestamp objects are not set here
-		//       in part because we opt not to trust the 
-		//       outside world, the engine loads
-		//       the user and updates the fields it
-		//       wants to update
+		storageUser.setBirthdate( theUser.getBirthdate());
+		
+		// the timestamp objects are not set here in part because
+		// we opt not to trust the outside world, the engine loads
+		// the user and updates the fields it wants to update
 		return storageUser;
 	}
 	

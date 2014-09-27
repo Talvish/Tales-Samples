@@ -15,13 +15,17 @@
 // ***************************************************************************
 package com.tales.samples.userservice;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.google.common.base.Preconditions;
 import com.tales.businessobjects.ObjectId;
+import com.tales.communication.CommunicationException;
 import com.tales.rigs.objectid.client.ObjectIdManager;
+import com.tales.services.DependencyException;
+import com.tales.services.DependencyException.Problem;
 import com.tales.system.configuration.ConfigurationManager;
 
 /**
@@ -54,12 +58,14 @@ public class UserEngine {
 		User user;
 		
 		user = new User( new ObjectId( 1, 1, 100 ) );
-		user.setFirstName( "John" );
-		user.setLastName( "Doe" );		
+		user.setFirstName( "John" );		
+		user.setLastName( "Doe" );	
+		user.setBirthdate( LocalDate.of( 1980,  12,  14) );
 		storage.put( user.getId(), user );
 		
 		user = new User( new ObjectId( 2, 1, 100 ) );
 		user.setFirstName( "Jane" );
+		user.setMiddleName( "Mildred" );
 		user.setLastName( "Smith" );		
 		storage.put( user.getId(), user );
 
@@ -93,17 +99,15 @@ public class UserEngine {
 	/**
 	 * Creates the user in storage. The parameters are not forced.
 	 */
-	public User createUser( String theFirstName, String theLastName ) {
-		User user;
-		
+	public User createUser( User theUser ) {
 		try {
-			user = new User( oidManager.generateObjectId( User.USER_TYPE_NAME ) );
+			theUser.setId( oidManager.generateObjectId( User.USER_TYPE_NAME ) );
 		
-			user.setFirstName( theFirstName );
-			user.setLastName( theLastName );
-			storage.put( user.getId(), user);
+			storage.put( theUser.getId(), theUser);
 			status.recordCreatedUser(); // update our status block
-			return user;
+			return theUser;
+		} catch( CommunicationException e ) {
+			throw new DependencyException( Problem.CANNOT_COMMUNICATE, "could not generate an object id for the user", e ); // TODO: not exactly accurate (may want to move this upstream)
 
 		} catch (InterruptedException e) {
 			// this shouldnt' have happened, no threads are killing things
@@ -116,7 +120,7 @@ public class UserEngine {
 	 */
 	public User updateUser( User theUser ) {
 		Preconditions.checkArgument( theUser != null, "a user must be given if it is to be updated" );
-		User user = getUser( theUser.getId() );
+		User user = getUser( theUser.getId() ); // makes sure we have an id
 		
 		if( user != null && ! user.isDeleted() ) { // we don't allow updates to soft-deleted users
 			user.setFirstName( theUser.getFirstName( ) );
