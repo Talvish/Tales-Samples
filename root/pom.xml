@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>tales.samples</groupId>
   <artifactId>tales.samples.root</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.5.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>Root Tales Samples Project</name>
   <description>Root project for the Tales Samples Repository</description>
@@ -137,22 +137,22 @@
         <dependency>
 	   	    <groupId>tales</groupId>
 	   	    <artifactId>tales.common</artifactId>
-	   	    <version>1.5.0-SNAPSHOT</version>
+	   	    <version>1.5.1-SNAPSHOT</version>
 	   	</dependency>
     	<dependency>
 	   	    <groupId>tales</groupId>
 	   	    <artifactId>tales.client</artifactId>
-	   	    <version>1.5.0-SNAPSHOT</version>
+	   	    <version>1.5.1-SNAPSHOT</version>
 	   	</dependency>
 	   	<dependency>
 	   	    <groupId>tales</groupId>
 	   	    <artifactId>tales.services</artifactId>
-	   	    <version>1.5.0-SNAPSHOT</version>
+	   	    <version>1.5.1-SNAPSHOT</version>
 	   	</dependency>
 	   	<dependency>
 	   	    <groupId>tales.rigs</groupId>
 	   	    <artifactId>tales.rigs.object_id_client</artifactId>
-	   	    <version>0.0.1-SNAPSHOT</version>
+	   	    <version>0.5.0-SNAPSHOT</version>
 	   	</dependency>
 	  	<dependency>
 	    	<groupId>joda-time</groupId>
