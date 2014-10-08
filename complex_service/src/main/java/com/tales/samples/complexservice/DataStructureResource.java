@@ -81,7 +81,16 @@ public class DataStructureResource {
 	public PolymorphicStructure setPolymorphicStructure( @RequestParam( name="value" )PolymorphicStructure theValue ) {
 		return theValue;
 	}
-
+	
+	/**
+	 * Returns a structure that is polymorphic, where the entities are super and subclasses.
+	 */
+	@ResourceOperation( name="get_inheritance_container", path="GET : get_inheritance_container" )
+	public InheritanceContainer getInheritanceContainer( ) {
+		InheritanceContainer returnValue = new InheritanceContainer( new InheritanceSuperclass(  "hello", false ) );
+		return returnValue;
+	}
+	
 //	/**
 //	 * Returns a polymorphic structure.
 //	 */
