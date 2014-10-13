@@ -15,6 +15,9 @@
 // ***************************************************************************
 package com.tales.samples.complexservice;
 
+import java.util.SortedSet;
+import java.util.TreeSet;
+
 import com.tales.contracts.data.DataContract;
 import com.tales.contracts.data.DataMember;
 
@@ -24,20 +27,20 @@ import com.tales.contracts.data.DataMember;
  * @author jmolnar
  *
  */
-@DataContract( name="inheritance_container" )
-public class InheritanceContainer {
-	@DataMember( name="poly_value", valueTypes={ InheritanceSuperclass.class, InheritanceSubclass.class } )
-	private InheritanceSuperclass polyValue;
+@DataContract( name="self_looping_class" )
+public class SelfLoopingClass {
+	@DataMember( name="member_a")
+	private String memberA;
+	@DataMember( name="member_b")
+	private SortedSet<SelfLoopingClass> memberSubA	= new TreeSet<SelfLoopingClass>( );
+
+	/**
+	 * Constructor for serialization.
+	 */
+	protected SelfLoopingClass( ) {		
+	}
 	
-	protected InheritanceContainer( ) {
-		polyValue =  null;
-	}
-
-	protected InheritanceContainer( InheritanceSuperclass theValue  ) {
-		polyValue =  theValue;
-	}
-
-	public InheritanceSuperclass getValue( ) {
-		return polyValue;
+	public SelfLoopingClass( String theA ) {
+		memberA = theA;
 	}
 }

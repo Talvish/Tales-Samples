@@ -90,7 +90,41 @@ public class DataStructureResource {
 		InheritanceContainer returnValue = new InheritanceContainer( new InheritanceSuperclass(  "hello", false ) );
 		return returnValue;
 	}
-	
+
+ 	/**
+	 * Returns a structure that is polymorphic, where the entities are super and subclasses.
+	 */
+	@ResourceOperation( name="get_self_looping_class", path="GET : get_self_looping_class" )
+	public SelfLoopingClass getSelfLoopingClass( ) {
+		SelfLoopingClass returnValue = new SelfLoopingClass( "a" );
+		return returnValue;
+	}
+
+	/**
+	 * Returns a simple array.
+	 */
+	@ResourceOperation( name="get_array", path="GET : get_array" )
+	public Long[] getArray( ) {
+		Long[] longs = { 1l, 98765432190l };
+		return longs;
+	}
+
+
+// TODO: I don't support below yet
+//	/**
+//	 * Returns a complex generic array.
+//	 */
+//	@ResourceOperation( name="get_generic_array", path="GET : get_generic_array" )
+//	public GenericStructure<String>[] getGenericArray( ) {
+//		@SuppressWarnings("unchecked")
+//		GenericStructure<String>[] array = ( GenericStructure<String>[] )Array.newInstance( GenericStructure.class, 2);
+//		
+//		array[ 0 ] = new GenericStructure<String>( "hello",  1 );
+//		array[ 1 ] = new GenericStructure<String>( "goodbye",  2 );
+//		return array;
+//	}
+
+
 //	/**
 //	 * Returns a polymorphic structure.
 //	 */
