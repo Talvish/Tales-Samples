@@ -15,6 +15,8 @@
 // ***************************************************************************
 package com.tales.samples.complexservice;
 
+import java.lang.reflect.Array;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -110,31 +112,42 @@ public class DataStructureResource {
 	}
 
 
-// TODO: I don't support below yet
-//	/**
-//	 * Returns a complex generic array.
-//	 */
-//	@ResourceOperation( name="get_generic_array", path="GET : get_generic_array" )
-//	public GenericStructure<String>[] getGenericArray( ) {
-//		@SuppressWarnings("unchecked")
-//		GenericStructure<String>[] array = ( GenericStructure<String>[] )Array.newInstance( GenericStructure.class, 2);
-//		
-//		array[ 0 ] = new GenericStructure<String>( "hello",  1 );
-//		array[ 1 ] = new GenericStructure<String>( "goodbye",  2 );
-//		return array;
-//	}
+ 	/**
+	 * Returns a complex generic array.
+	 */
+	@ResourceOperation( name="get_generic_array", path="GET : get_generic_array" )
+	public GenericStructure<LocalDate,String>[] getGenericArray( ) {
+		@SuppressWarnings("unchecked")
+		GenericStructure<LocalDate,String>[] array = ( GenericStructure<LocalDate,String>[] )Array.newInstance( GenericStructure.class, 2);
+		
+		array[ 0 ] = new GenericStructure<LocalDate,String>( LocalDate.MAX, "max", 1 );
+		array[ 1 ] = new GenericStructure<LocalDate,String>( LocalDate.MIN, "min", 2 );
+		return array;
+	}
 
 
+	/**
+	 * Returns a generic structure.
+	 */
+	@ResourceOperation( name="get_generic_structure", path="GET : get_generic_structure" )
+	public GenericStructure<String,Long> getGenericStructure( ) {
+		return new GenericStructure<String,Long>(
+				"string",
+				1l,
+				2 );
+	}
+
+// NOTE: an example of something that doesn't work since it uses generics and inheritance
 //	/**
 //	 * Returns a polymorphic structure.
 //	 */
-//	@ResourceOperation( name="get_generic_structure", path="GET : get_generic_structure" )
-//	public GenericStructure<String> getGenericStructure( ) {
-//		return new GenericStructure<String>(
-//				"string",
-//				2 );
+//	@ResourceOperation( name="get_generic_structure_two", path="GET : get_generic_structure_two" )
+//	public GenericStructureTwo<String,Long> getGenericStructureTwo( ) {
+//		return new GenericStructureTwo<String,Long>(
+//				"not a string",
+//				2l );
 //	}
-	
+
 	/**
 	 * Returns a list of strings. Demonstrates both Java generics and list responses.
 	 */

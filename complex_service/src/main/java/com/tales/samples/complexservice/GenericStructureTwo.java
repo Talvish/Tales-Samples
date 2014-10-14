@@ -19,23 +19,21 @@ import com.tales.contracts.data.DataContract;
 import com.tales.contracts.data.DataMember;
 
 /**
- * This is a data structure that contains more than just
- * primitive types, but also other structures.
+ * This is an example of a structure that isn't supported by Tales
+ * at this time. It is a generic class extended a generic class.
  * @author Joseph Molnar
  *
  */
 @DataContract( name="com.tales.data.generic_structure" )
-public class GenericStructure<A,B> {
-	@DataMember( name = "generic_member_a" ) A genericMemberA;
-	@DataMember( name = "generic_member_b" ) B genericMemberB;
-	@DataMember( name = "normal_member" ) int normalMember;
+public class GenericStructureTwo<A,B> extends GenericStructure<A,B>{
+	@DataMember( name = "generic_member_z" ) A genericMemberZ;
+	@DataMember( name = "generic_member_Y" ) B genericMemberY;
 	
-	protected GenericStructure( ) {		
+	protected GenericStructureTwo( ) {		
 	}
 	
-	public GenericStructure( A theMemberA, B theMemberB, int theNormalMember) {
-		genericMemberA = theMemberA;
-		genericMemberB = theMemberB;
-		normalMember = theNormalMember;
+	public GenericStructureTwo( A theMemberZ, B theMemberY) {
+		genericMemberZ = theMemberZ;
+		genericMemberY = theMemberY;
 	}
 }
