@@ -37,7 +37,7 @@ public class MultiversionResource {
 	 * in the query string or post body. This version of echo will only be called if the 'version' parameter
 	 * is any version up to '20140110'.
 	 */
-	@ResourceOperation( name="echo", path="GET | POST : echo", versions="-20140110", description="echo operation for all contract versions up through 20140110" ) 
+	@ResourceOperation( name="echo_20140101", path="GET | POST : echo", versions="-20140110", description="echo operation for all contract versions up through 20140110" ) 
 	public String echo20140101( @RequestParam( name="value" )String theValue ) {
 		return "echo (older version): " + theValue;
 	}
@@ -47,7 +47,7 @@ public class MultiversionResource {
 	 * in the query string or post body. This version of echo will only be called if the 'version' parameter
 	 * is the value '20140120' or beyond. 
 	 */
-	@ResourceOperation( name="echo", path="GET | POST : echo", versions="20140120-", description="echo operation for all contract versions 20140120 and beyond" ) 
+	@ResourceOperation( name="echo_20140130", path="GET | POST : echo", versions="20140120-", description="echo operation for all contract versions 20140120 and beyond" ) 
 	public String echo20140130( @RequestParam( name="value" )String theValue ) {
 		return "echo (newer version): " + theValue;
 	}

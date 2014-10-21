@@ -15,10 +15,9 @@
 // ***************************************************************************
 package com.tales.samples.complexservice;
 
-import com.google.common.base.Strings;
+import com.tales.services.StandardService;
 import com.tales.services.http.HttpInterface;
-import com.tales.services.http.HttpService;
-import com.tales.system.configuration.PropertySource;
+import com.tales.services.http.ServiceConstants;
 
 /**
  * A service demonstrating a lot of different abilities of the tales service framework.
@@ -28,38 +27,20 @@ import com.tales.system.configuration.PropertySource;
  * @author Joseph Molnar
  *
  */
-public class ComplexService extends HttpService {
+public class ComplexService extends StandardService {
 
-	protected ComplexService( ) {
+	public ComplexService( ) {
 		super( "complex_service", "Complex Service", "A service demonstrating a lot of different abilities of the tales service framework." );
 	}
 	
 	@Override
-	protected void onInitializeConfiguration() {
-		String filename = this.getConfigurationManager( ).getStringValue( "settings.file", null ); // get a config filename	 from command-line, if available
-		
-		if( !Strings.isNullOrEmpty( filename ) ) {
-			this.getConfigurationManager( ).addSource( new PropertySource( filename) );
-		}
-	};
-	
-	@Override
 	protected void onStart() {
 		super.onStart();
+
+		// going to bind different resources against different interfaces as a demonstration
+		this.interfaceManager.getInterface( ServiceConstants.PUBLIC_INTERFACE_NAME, HttpInterface.class ).bind( new DataStructureResource( ), "/data_structure_contract" );
+		this.interfaceManager.getInterface( ServiceConstants.INTERNAL_INTERFACE_NAME, HttpInterface.class ).bind( new ResponseResource( ), "/response_contract" );
+		this.interfaceManager.getInterface( ServiceConstants.MANAGEMENT_INTERFACE_NAME, HttpInterface.class ).bind( new RequestResource( ),  "/request_contract" );
 		
-		HttpInterface httpInterface = new HttpInterface( "public", this );
-		
-		this.interfaceManager.register( httpInterface );
-		httpInterface.bind( new DataStructureResource( ), "/data_structure_contract" );
-		httpInterface.bind( new ResponseResource( ), "/response_contract" );
-		httpInterface.bind( new RequestResource( ),  "/request_contract" );
-	}
-	
-    public static void main( String[ ] args ) throws Exception {
-    	ComplexService service = new ComplexService( );
-    	
-    	service.start( args );
-    	service.run( );
-    	service.stop( );
 	}
 }

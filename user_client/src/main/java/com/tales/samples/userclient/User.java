@@ -16,25 +16,21 @@
 package com.tales.samples.userclient;
 
 import java.time.LocalDate;
-import java.time.ZonedDateTime;
 
-
-
-
-import com.tales.businessobjects.ObjectId;
+import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
+import com.tales.businessobjects.BusinessObjectBase;
 import com.tales.contracts.data.DataContract;
 import com.tales.contracts.data.DataMember;
 
 
 @DataContract( name ="com.tales.transport.user")
-public class User {
-	@DataMember( name = "id") private ObjectId id;
-	@DataMember( name = "creation_timestamp" ) private ZonedDateTime creationTimestamp;
-	@DataMember( name = "modification_timestamp" ) private ZonedDateTime modificationTimestamp;
+public class User extends BusinessObjectBase {
 	@DataMember( name = "first_name" ) private String firstName;
 	@DataMember( name = "middle_name" ) private String middleName;
 	@DataMember( name = "last_name" ) private String lastName;
 	@DataMember( name = "birthdate" ) public LocalDate birthdate;
+	@DataMember( name = "email_address" ) public String emailAddress;
 	
 	/**
 	 * A constructor used for serialization purposes.
@@ -42,27 +38,6 @@ public class User {
 	public User( ) {
 	}
 	
-	/**
-	 * The unique id given to this object.
-	 */
-	public ObjectId getId( ) {
-		return id;
-	}
-	
-	/**
-	 * The date, in UTC, when the object was created.
-	 */
-	public ZonedDateTime getCreationTimestamp( ) {
-		return creationTimestamp;
-	}	
-	
-	/**
-	 * The date, in UTC when the object was last modified.
-	 */
-	public ZonedDateTime getModificationTimestamp( ) {
-		return modificationTimestamp;
-	}
-
 	/**
 	 * Returns the first name;
 	 */
@@ -74,6 +49,7 @@ public class User {
 	 * Sets the first name.
 	 */
 	public void setFirstName( String theName ) {
+		Preconditions.checkArgument( !Strings.isNullOrEmpty( theName ), "user needs a first name" );
 		firstName = theName;
 	}
 
@@ -121,5 +97,22 @@ public class User {
 	 */
 	public void setBirthdate( LocalDate theBirthdate ) {
 		birthdate = theBirthdate;
+	}
+	
+	/**
+	 * Returns the primary email address of the user.
+	 * @return the user's email address
+	 */
+	public String getEmailAddress( ) {
+		return emailAddress;
+	}
+	
+	/**
+	 * Sets the email address.
+	 * @param theEmailAddress the email address to set
+	 */
+	public void setEmailAddress( String theEmailAddress ) {
+		// TODO: ideally this does some validation of the email address
+		emailAddress = theEmailAddress;
 	}
 }

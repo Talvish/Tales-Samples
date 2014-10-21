@@ -80,6 +80,7 @@ public class UserClient extends ResourceClient {
 	    	}
 	    	break;
 		case "create_user":
+			for( int i = 0; i < 10; i += 1 ) {
 			User user = new User( );
 			
 			user.setFirstName( "Jimmy" );
@@ -92,6 +93,7 @@ public class UserClient extends ResourceClient {
 	    	} else {
 	    		logger.debug( "Did not create user." );
 	    	}
+			}
 			break;
 
 		default:

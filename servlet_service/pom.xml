@@ -33,7 +33,7 @@
             <configuration>
                 <archive>
                     <manifest>
-                        <mainClass>com.tales.samples.servletservice.ServletService</mainClass>
+                        <mainClass>com.tales.services.ServiceHost</mainClass>
                     </manifest>
                 </archive>
             </configuration>

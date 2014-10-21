@@ -15,48 +15,27 @@
 // ***************************************************************************
 package com.tales.samples.multiversionservice;
 
-import com.google.common.base.Strings;
+import com.tales.services.StandardService;
 import com.tales.services.http.HttpInterface;
-import com.tales.services.http.HttpService;
-import com.tales.system.configuration.PropertySource;
+import com.tales.services.http.ServiceConstants;
 
 /**
  * A public http service demonstrating contracts with the same method having more than one version available.
- *  * <br>
+ * <br>
  * For browsing samples, this should be the SECOND to look at.
  * @author Joseph Molnar
  *
  */
-public class MultiversionService extends HttpService {
+public class MultiversionService extends StandardService {
 
-	protected MultiversionService( ) {
+	public MultiversionService( ) {
 		super( "multiversion_service", "Multiversion Service", "A public http service demonstrating contracts with the same method having more than one version available." );
 	}
-	
-	@Override
-	protected void onInitializeConfiguration() {
-		String filename = this.getConfigurationManager( ).getStringValue( "settings.file", null ); // get a config filename	 from command-line, if available
-		
-		if( !Strings.isNullOrEmpty( filename ) ) {
-			this.getConfigurationManager( ).addSource( new PropertySource( filename) );
-		}
-	};
 	
 	@Override
 	protected void onStart() {
 		super.onStart();
 		
-		HttpInterface httpInterface = new HttpInterface( "public", this );
-		
-		this.interfaceManager.register( httpInterface );
-		httpInterface.bind( new MultiversionResource( ), "/multiversion_contract" );
-	}
-	
-    public static void main( String[ ] args ) throws Exception {
-    	MultiversionService service = new MultiversionService( );
-    	
-    	service.start( args );
-    	service.run( );
-    	service.stop( );
+		this.interfaceManager.getInterface( ServiceConstants.PUBLIC_INTERFACE_NAME, HttpInterface.class ).bind( new MultiversionResource( ), "/multiversion_contract" );
 	}
 }

@@ -33,6 +33,7 @@ public class User extends BusinessObjectBase {
 	private String firstName;
 	private String middleName;
 	private String lastName;
+	private String emailAddress;
 	
 	public LocalDate birthdate;
 	
@@ -96,6 +97,23 @@ public class User extends BusinessObjectBase {
 	 */
 	public void setLastName( String theLastName ) {
 		lastName = theLastName;
+		this.indicateModified();
+	}
+	
+	/**
+	 * Gets the primary email address of the user. 
+	 * @return the primary email address
+	 */
+	public String getEmailAddress( ) {
+		return this.emailAddress;
+	}
+	
+	/**
+	 * Sets the email address.
+	 * @param theEmailAddress the email address for the user
+	 */
+	public void setEmailAddress( String theEmailAddress ){
+		emailAddress = theEmailAddress;
 		this.indicateModified();
 	}
 	

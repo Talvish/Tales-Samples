@@ -15,36 +15,22 @@
 // ***************************************************************************
 package com.tales.samples.servletservice;
 
-import com.google.common.base.Strings;
+import com.tales.services.StandardService;
 import com.tales.services.http.HttpInterface;
-import com.tales.services.http.HttpService;
-import com.tales.system.configuration.PropertySource;
+import com.tales.services.http.ServiceConstants;
 
 /**
  * A public service demonstrating contracts being used on a servlet.
  * @author Joseph Molnar
  *
  */
-public class ServletService extends HttpService {
-
+public class ServletService extends StandardService {
 	/**
 	 * Protected constructor called by the main below.
 	 */
-	protected ServletService( ) {
+	public ServletService( ) {
 		super( "servlet_service", "Servlet Service", "A Tales service demonstrating the hosting of a contracted Servlet." );
 	}
-	
-	/**
-	 * Helper for setting up any required configuration.
-	 */
-	@Override
-	protected void onInitializeConfiguration() {
-		String filename = this.getConfigurationManager( ).getStringValue( "settings.file", null ); // get a config filename	 from command-line, if available
-		
-		if( !Strings.isNullOrEmpty( filename ) ) {
-			this.getConfigurationManager( ).addSource( new PropertySource( filename) );
-		}
-	};
 	
 	/**
 	 * Override to setup the interfaces and register the servlet.
@@ -52,23 +38,6 @@ public class ServletService extends HttpService {
 	@Override
 	protected void onStart() {
 		super.onStart();
-		
-		HttpInterface httpInterface = new HttpInterface( "public", this );
-		
-		this.interfaceManager.register( httpInterface );
-		httpInterface.bind( new SampleServlet( ), "/sample" );
-	}
-	
-	/**
-	 * The 
-	 * @param args
-	 * @throws Exception
-	 */
-    public static void main( String[ ] args ) throws Exception {
-    	ServletService service = new ServletService( );
-    	
-    	service.start( args );
-    	service.run( );
-    	service.stop( );
+		this.interfaceManager.getInterface( ServiceConstants.PUBLIC_INTERFACE_NAME, HttpInterface.class ).bind( new SampleServlet( ), "/sample" );
 	}
 }

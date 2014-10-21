@@ -32,7 +32,7 @@
             <configuration>
                 <archive>
                     <manifest>
-                        <mainClass>com.tales.samples.multiversionservice.MultiversionService</mainClass>
+                        <mainClass>com.tales.services.ServiceHost</mainClass>
                     </manifest>
                 </archive>
             </configuration>

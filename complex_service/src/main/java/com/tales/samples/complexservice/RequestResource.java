@@ -31,7 +31,7 @@ public class RequestResource {
 	/**
 	 * This method shows a simple hard fixed path.
 	 */
-	@ResourceOperation( name="overlap", path="GET : overlap/element_one" )
+	@ResourceOperation( name="overlap1", path="GET : overlap/element_one" )
 	public String overlapFixedPath1( ) {
 		return "overlap with fixed path value 'element_one'";
 	}
@@ -39,7 +39,7 @@ public class RequestResource {
 	/**
 	 * This method shows a path where a string parameter can be in the path.
 	 */
-	@ResourceOperation( name="overlap", path="GET : overlap/{value}" )
+	@ResourceOperation( name="overlap2", path="GET : overlap/{value}" )
 	public String overlapOneStringPathParameter( @PathParam(name = "value") String theValue ) {
 		return "overlap with one string path parameter: " +  theValue;
 	}
@@ -50,7 +50,7 @@ public class RequestResource {
 	 * this method will be called. This also shows the type of the parameter being something other than a string. 
 	 * In this case, an int.
 	 */
-	@ResourceOperation( name="overlap", path="GET : overlap/{value:[0-9]{3,4}}" )
+	@ResourceOperation( name="overlap3", path="GET : overlap/{value:[0-9]{3,4}}" )
 	public String overlapRegexPathParameter( @PathParam(name = "value") int theValue ) {
 		return "overlap with regex int path path parameter: " + theValue;
 	}
@@ -59,7 +59,7 @@ public class RequestResource {
 	 * This method shows a path where a string parameter can be in the path and will match based on a regular expression.
 	 * Even the the 'overlapOnePathParameter' overlaps this will still be used.
 	 */
-	@ResourceOperation( name="overlap", path="GET : overlap/element_two" )
+	@ResourceOperation( name="overlap4", path="GET : overlap/element_two" )
 	public String overlapFixedPath2( ) {
 		return "overlap with fixed path value 'element_two'";
 	}
@@ -68,7 +68,7 @@ public class RequestResource {
 	 * This method shows a path with two values and while it can overlap with the above, having
 	 * additional path elements will ensure this gets called.
 	 */
-	@ResourceOperation( name="overlap", path="GET : overlap/{value_one}/{value_two}" )
+	@ResourceOperation( name="overlap5", path="GET : overlap/{value_one}/{value_two}" )
 	public String overlapTwoStringPathParameter( @PathParam(name = "value_one") String theValueOne, @PathParam(name = "value_two") String theValueTwo  ) {
 		return "overlap with two string path parameters: " +  theValueOne + " | " + theValueTwo;
 	}

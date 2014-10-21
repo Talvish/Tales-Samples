@@ -30,6 +30,7 @@ public class TransportUser extends BusinessObjectBase {
 	@DataMember( name = "middle_name" ) private String middleName;
 	@DataMember( name = "last_name" ) private String lastName;
 	@DataMember( name = "birthdate" ) private LocalDate birthdate;
+	@DataMember( name = "email_address" ) public String emailAddress;
 	
 	/**
 	 * A constructor used for serialization purposes.
@@ -85,6 +86,23 @@ public class TransportUser extends BusinessObjectBase {
 	 */
 	public LocalDate getBirthdate( ) {
 		return birthdate;
+	}
+	
+	/**
+	 * Returns the primary email address of the user.
+	 * @return the user's email address
+	 */
+	public String getEmailAddress( ) {
+		return emailAddress;
+	}
+	
+	/**
+	 * Sets the email address.
+	 * @param theEmailAddress the email address to set
+	 */
+	public void setEmailAddress( String theEmailAddress ) {
+		// TODO: ideally this does some validation of the email address
+		emailAddress = theEmailAddress;
 	}
 	
 	public static User toEngineUser( TransportUser theUser ) {

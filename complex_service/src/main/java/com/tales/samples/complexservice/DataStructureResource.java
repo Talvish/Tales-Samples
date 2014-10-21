@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.tales.contracts.services.http.PathParam;
 import com.tales.contracts.services.http.RequestParam;
 import com.tales.contracts.services.http.ResourceContract;
 import com.tales.contracts.services.http.ResourceOperation;
@@ -137,6 +138,14 @@ public class DataStructureResource {
 				2 );
 	}
 
+	/**
+	 * Returns the path passed in.
+	 */
+	@ResourceOperation( name="path", path="GET : path/{path : [a-z]+(/[a-z]+)*}" )
+	public String getPath( @PathParam( name="path" )String thePath ) {
+		return thePath;
+	}
+	
 // NOTE: an example of something that doesn't work since it uses generics and inheritance
 //	/**
 //	 * Returns a polymorphic structure.

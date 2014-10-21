@@ -15,11 +15,10 @@
 // ***************************************************************************
 package com.tales.samples.userservice;
 
-import com.google.common.base.Strings;
+import com.tales.services.StandardService;
 import com.tales.services.http.HttpInterface;
-import com.tales.services.http.HttpService;
+import com.tales.services.http.ServiceConstants;
 import com.tales.services.http.servlets.EnableHeaderOverridesFilter;
-import com.tales.system.configuration.PropertySource;
 
 /**
  * The is an example of a user service that is built using many of the patterns
@@ -32,47 +31,24 @@ import com.tales.system.configuration.PropertySource;
  * @author Joseph Molnar
  *
  */
-public class UserService extends HttpService {
+public class UserService extends StandardService {
 	private UserEngine userEngine;
 
-	protected UserService( ) {
+	public UserService( ) {
 		super( "user_service", "User Service", "A simple sample service showing a functioning user service." );
-    	final org.slf4j.Logger jettyLogger = org.slf4j.LoggerFactory.getLogger("org.eclipse.jetty");
-    	if (jettyLogger instanceof ch.qos.logback.classic.Logger) {
-    		( (ch.qos.logback.classic.Logger) jettyLogger ).setLevel(ch.qos.logback.classic.Level.WARN);
-    	}
 	}
-	
-	@Override
-	protected void onInitializeConfiguration() {
-		String filename = this.getConfigurationManager( ).getStringValue( "settings.file", null ); // get a config filename	 from command-line, if available
-		
-		if( !Strings.isNullOrEmpty( filename ) ) {
-			this.getConfigurationManager( ).addSource( new PropertySource( filename) );
-		}
-	};
 	
 	@Override
 	protected void onStart() {
 		super.onStart();
 		
+		HttpInterface httpInterface = this.interfaceManager.getInterface( ServiceConstants.PUBLIC_INTERFACE_NAME, HttpInterface.class );
 
-		HttpInterface httpInterface = new HttpInterface( "public", this );		
-		this.interfaceManager.register( httpInterface );
-		
 		userEngine = new UserEngine( this.getConfigurationManager( ) );
 		httpInterface.bind( new EnableHeaderOverridesFilter(), "/user" ); // we are in debug mode, so let's allow header overrides
 		httpInterface.bind( new UserResource( userEngine ), "/user" );
-		// engine's typically have their own status block and those need to be
-		// registered with a status manager
+
+		// engine's typically have their own status block and those need to be  registered with a status manager
 		this.statusManager.register( "user_engine_status", userEngine.getStatus( ) );
-	}
-	
-    public static void main( String[ ] args ) throws Exception {
-    	UserService service = new UserService( );
-    	
-    	service.start( args );
-    	service.run( );
-    	service.stop( );
 	}
 }

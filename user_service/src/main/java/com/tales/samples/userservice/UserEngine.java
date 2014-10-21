@@ -110,7 +110,7 @@ public class UserEngine {
 			throw new DependencyException( Problem.CANNOT_COMMUNICATE, "could not generate an object id for the user", e ); // TODO: not exactly accurate (may want to move this upstream)
 
 		} catch (InterruptedException e) {
-			// this shouldnt' have happened, no threads are killing things
+			// this shouldn't have happened, no threads are killing things
 			throw new IllegalStateException( "being interrupted" );
 		}
 	}
