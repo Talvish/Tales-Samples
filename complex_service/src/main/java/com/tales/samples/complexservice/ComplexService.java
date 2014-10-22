@@ -15,7 +15,7 @@
 // ***************************************************************************
 package com.tales.samples.complexservice;
 
-import com.tales.services.StandardService;
+import com.tales.services.Service;
 import com.tales.services.http.HttpInterface;
 import com.tales.services.http.ServiceConstants;
 
@@ -27,7 +27,7 @@ import com.tales.services.http.ServiceConstants;
  * @author Joseph Molnar
  *
  */
-public class ComplexService extends StandardService {
+public class ComplexService extends Service {
 
 	public ComplexService( ) {
 		super( "complex_service", "Complex Service", "A service demonstrating a lot of different abilities of the tales service framework." );

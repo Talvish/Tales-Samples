@@ -15,7 +15,7 @@
 // ***************************************************************************
 package com.tales.samples.servletservice;
 
-import com.tales.services.StandardService;
+import com.tales.services.Service;
 import com.tales.services.http.HttpInterface;
 import com.tales.services.http.ServiceConstants;
 
@@ -24,7 +24,7 @@ import com.tales.services.http.ServiceConstants;
  * @author Joseph Molnar
  *
  */
-public class ServletService extends StandardService {
+public class ServletService extends Service {
 	/**
 	 * Protected constructor called by the main below.
 	 */

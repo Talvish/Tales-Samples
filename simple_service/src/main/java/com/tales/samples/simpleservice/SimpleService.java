@@ -15,7 +15,7 @@
 // ***************************************************************************
 package com.tales.samples.simpleservice;
 
-import com.tales.services.StandardService;
+import com.tales.services.Service;
 import com.tales.services.http.HttpInterface;
 import com.tales.services.http.ServiceConstants;
 
@@ -26,7 +26,7 @@ import com.tales.services.http.ServiceConstants;
  * @author Joseph Molnar
  *
  */
-public class SimpleService extends StandardService {
+public class SimpleService extends Service {
 	public SimpleService( ) {
 		super( "simple_service", "Simple Service", "A public tales service show a very simple contract." );
 	}

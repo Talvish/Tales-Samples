@@ -19,7 +19,7 @@ import java.util.HashMap;
 
 import com.tales.serialization.Readability;
 import com.tales.services.OperationContext.Details;
-import com.tales.services.StandardService;
+import com.tales.services.Service;
 import com.tales.services.http.ServiceConstants;
 import com.tales.services.http.WebsiteInterface;
 
@@ -28,7 +28,7 @@ import com.tales.services.http.WebsiteInterface;
  * @author Joseph Molnar
  *
  */
-public class WebsiteService extends StandardService {
+public class WebsiteService extends Service {
 
 	public WebsiteService( ) {
 		super( "website_service", "Website Service", "A public tales service show a very simple website calling a service." );

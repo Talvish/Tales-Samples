@@ -15,7 +15,7 @@
 // ***************************************************************************
 package com.tales.samples.userservice;
 
-import com.tales.services.StandardService;
+import com.tales.services.Service;
 import com.tales.services.http.HttpInterface;
 import com.tales.services.http.ServiceConstants;
 import com.tales.services.http.servlets.EnableHeaderOverridesFilter;
@@ -31,7 +31,7 @@ import com.tales.services.http.servlets.EnableHeaderOverridesFilter;
  * @author Joseph Molnar
  *
  */
-public class UserService extends StandardService {
+public class UserService extends Service {
 	private UserEngine userEngine;
 
 	public UserService( ) {

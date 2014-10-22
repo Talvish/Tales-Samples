@@ -15,7 +15,7 @@
 // ***************************************************************************
 package com.tales.samples.multiversionservice;
 
-import com.tales.services.StandardService;
+import com.tales.services.Service;
 import com.tales.services.http.HttpInterface;
 import com.tales.services.http.ServiceConstants;
 
@@ -26,7 +26,7 @@ import com.tales.services.http.ServiceConstants;
  * @author Joseph Molnar
  *
  */
-public class MultiversionService extends StandardService {
+public class MultiversionService extends Service {
 
 	public MultiversionService( ) {
 		super( "multiversion_service", "Multiversion Service", "A public http service demonstrating contracts with the same method having more than one version available." );
