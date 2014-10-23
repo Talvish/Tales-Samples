@@ -1,0 +1,70 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>tales.samples.custom_startup_service</artifactId>
+  <name>Sample Custom Startup Sample</name>
+  <description>A sample showing how to do a complete custom startup of a service.</description>
+
+
+  <parent>
+    <groupId>tales.samples</groupId>
+    <artifactId>tales.samples.root</artifactId>
+    <version>0.5.0-SNAPSHOT</version>
+    <relativePath>../root/pom.xml</relativePath>  
+  </parent>
+  
+  <build>
+    <sourceDirectory>src/main/java</sourceDirectory>
+    <plugins>
+      	<plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+        	<artifactId>maven-compiler-plugin</artifactId>
+      	</plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-release-plugin</artifactId>
+        </plugin>
+      	<plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+        </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jar-plugin</artifactId>
+            <configuration>
+                <archive>
+                    <manifest>
+                        <mainClass>com.tales.samples.customstartupservice.CustomStartupService</mainClass>
+                    </manifest>
+                </archive>
+            </configuration>
+        </plugin>
+        <plugin>
+        	<groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-resources-plugin</artifactId>
+      	</plugin>
+        <plugin>
+      	    <groupId>org.apache.maven.plugins</groupId>
+       	    <artifactId>maven-javadoc-plugin</artifactId>
+        </plugin>      	
+    </plugins>
+  </build> 
+  
+  <dependencies>
+	<dependency>
+		<groupId>tales</groupId>
+		<artifactId>tales.common</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>tales</groupId>
+		<artifactId>tales.services</artifactId>
+	</dependency>
+	<dependency>
+	    <groupId>com.google.guava</groupId>
+	    <artifactId>guava-jdk5</artifactId>
+	</dependency>
+	<dependency>
+    	<groupId>ch.qos.logback</groupId>
+    	<artifactId>logback-classic</artifactId>
+    </dependency>	
+  </dependencies> 
+</project>
