@@ -17,13 +17,15 @@ package com.tales.samples.customstartupservice;
 
 import com.tales.contracts.services.http.ResourceContract;
 import com.tales.contracts.services.http.ResourceOperation;
+import com.tales.contracts.services.http.ResourceOperation.Mode;
 
 /***
- * This a very simple contract that returns 'hello world'.
+ * This a very simple contract that returns 'hello world', though is running in non-blocking mode.
+ * Normally non-blocking would be for calls that do more work than this.
  * @author Joseph Molnar
  *
  */
-@ResourceContract( name="com.tales.simple_contract", versions={ "20140124" } )
+@ResourceContract( name="com.tales.simple_contract", versions={ "20140124" }, mode=Mode.NONBLOCKING )
 public class SimpleResource {
 	/**
 	 * An HTTP GET operation that simple returns the string 'hello world'.

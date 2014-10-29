@@ -21,7 +21,9 @@ import java.util.Map;
 import com.tales.services.Service;
 import com.tales.services.ServiceHost;
 import com.tales.services.http.HttpInterface;
+import com.tales.services.http.ResourceConfiguration;
 import com.tales.services.http.ServiceConstants;
+import com.tales.services.http.ThreadingConstants;
 import com.tales.system.configuration.ConfigurationManager;
 import com.tales.system.configuration.MapSource;
 
@@ -63,14 +65,15 @@ public class CustomStartupService extends Service {
 		HttpInterface publicHttpInterface = new HttpInterface( ServiceConstants.PUBLIC_INTERFACE_NAME, this );
 		
 		this.interfaceManager.register( publicHttpInterface );
-		publicHttpInterface.bind( new SimpleResource( ), "/simple_contract" );
+		publicHttpInterface.bind( new SimpleResource( ), "/simple_contract", new ResourceConfiguration( null, 500l ) );
 		
 		// setup the management interface
 		// (yes it is the same resource, but this is just demonstrating the ability to create additional interfaces)
 		HttpInterface managementHttpInterface = new HttpInterface( ServiceConstants.MANAGEMENT_INTERFACE_NAME, this );
 		
 		this.interfaceManager.register( managementHttpInterface );
-		managementHttpInterface.bind( new SimpleResource( ), "/simple_contract" );
+		// now we demonstrate using a custom defined thread pool and execution timeout for the resource 
+		managementHttpInterface.bind( new SimpleResource( ), "/simple_contract", new ResourceConfiguration( "custom", this.getConfigurationManager().getLongValue( "service.resource_execution_timeout", ThreadingConstants.DEFAULT_RESOURCE_EXECUTION_TIMEOUT ) ) );
 	}
 	
     public static void main( String[ ] theArgs ) throws Exception {
