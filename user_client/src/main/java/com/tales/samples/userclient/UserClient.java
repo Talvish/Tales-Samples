@@ -80,7 +80,7 @@ public class UserClient extends ResourceClient {
 	    	}
 	    	break;
 		case "create_user":
-			for( int i = 0; i < 10; i += 1 ) {
+			//for( int i = 0; i < 1; i += 1 ) {
 			User user = new User( );
 			
 			user.setFirstName( "Jimmy" );
@@ -93,7 +93,7 @@ public class UserClient extends ResourceClient {
 	    	} else {
 	    		logger.debug( "Did not create user." );
 	    	}
-			}
+			//}
 			break;
 
 		default:
@@ -148,7 +148,7 @@ public class UserClient extends ResourceClient {
 
 		return this.createRequest( this.methods[ 0 ], theUserId )
 				.setHeaderParameter( "Authorization", this.authToken )
-				.execute();
+				.call();
 	}
 
 	/**
@@ -162,7 +162,7 @@ public class UserClient extends ResourceClient {
 		return this.createRequest( this.methods[ 1 ], theUser.getId() )
 				.setBodyParameter( "user", theUser )
 				.setHeaderParameter( "Authorization", this.authToken )
-				.execute();
+				.call();
 	}
 	
 	/**
@@ -179,6 +179,6 @@ public class UserClient extends ResourceClient {
 		return this.createRequest( this.methods[ 2 ] )
 				.setBodyParameter( "user", theUser )
 				.setHeaderParameter( "Authorization", this.authToken )
-				.execute();
+				.call();
 	}
 }
