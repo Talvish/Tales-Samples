@@ -101,7 +101,7 @@ public class UserEngine {
 	 */
 	public User createUser( User theUser ) {
 		try {
-			theUser.setId( oidManager.generateObjectId( User.USER_TYPE_NAME ) );
+			theUser.setId( oidManager.generateObjectId( User.TYPE_NAME ) );
 		
 			storage.put( theUser.getId(), theUser);
 			status.recordCreatedUser(); // update our status block
