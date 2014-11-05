@@ -33,7 +33,7 @@
             <configuration>
                 <archive>
                     <manifest>
-                        <mainClass>com.tales.samples.customstartupservice.CustomStartupService</mainClass>
+                        <mainClass>com.talvish.tales.samples.customstartupservice.CustomStartupService</mainClass>
                     </manifest>
                 </archive>
             </configuration>

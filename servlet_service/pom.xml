@@ -33,7 +33,7 @@
             <configuration>
                 <archive>
                     <manifest>
-                        <mainClass>com.tales.services.ServiceHost</mainClass>
+                        <mainClass>com.talvish.tales.services.ServiceHost</mainClass>
                     </manifest>
                 </archive>
             </configuration>

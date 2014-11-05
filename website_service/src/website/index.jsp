@@ -1,7 +1,7 @@
 <%@page
-	import="com.tales.services.Service"
-	import="com.tales.services.http.AttributeConstants"
-	import="com.tales.system.configuration.ConfigurationManager"
+	import="com.talvish.tales.services.Service"
+	import="com.talvish.tales.services.http.AttributeConstants"
+	import="com.talvish.tales.system.configuration.ConfigurationManager"
 	contentType="text/html;charset=UTF-8" language="java" session="false"%>
 	
 <!DOCTYPE html>

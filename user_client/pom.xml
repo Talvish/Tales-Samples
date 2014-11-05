@@ -32,7 +32,7 @@
             <configuration>
                 <archive>
                     <manifest>
-                        <mainClass>com.tales.samples.userclient.UserClient</mainClass>
+                        <mainClass>com.talvish.tales.samples.userclient.UserClient</mainClass>
                     </manifest>
                 </archive>
             </configuration>
