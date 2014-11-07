@@ -34,7 +34,7 @@ import com.talvish.tales.system.configuration.ConfigurationManager;
  * independent of the transports/communication mechanisms used.
  * This allows for a few possibilities including, a) having
  * more than one communication mechanism but same underlying
- * logic/control, b) a great entity to write tests againsts
+ * logic/control, b) a great entity to write tests against
  * since this is the pure logic/workhorse of the component.
  * @author Joseph Molnar
  */

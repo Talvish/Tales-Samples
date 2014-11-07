@@ -6,7 +6,7 @@
 
 
   <parent>
-    <groupId>tales.samples</groupId>
+    <groupId>com.talvish.tales.samples</groupId>
     <artifactId>tales.samples.root</artifactId>
     <version>0.5.0-SNAPSHOT</version>
     <relativePath>../root/pom.xml</relativePath>  
@@ -51,11 +51,11 @@
   
   <dependencies>
 	<dependency>
-		<groupId>tales</groupId>
+		<groupId>com.talvish.tales</groupId>
 		<artifactId>tales.common</artifactId>
 	</dependency>
 	<dependency>
-		<groupId>tales</groupId>
+		<groupId>com.talvish.tales</groupId>
 		<artifactId>tales.services</artifactId>
 	</dependency>
 	<dependency>
