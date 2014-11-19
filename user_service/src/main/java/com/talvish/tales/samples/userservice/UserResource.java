@@ -84,8 +84,8 @@ public class UserResource {
 	 * The HTTP request to get all users.
 	 */
 	@ResourceOperation( name="get_users", path="GET : users"  )
-	public Collection<TransportUser> getUsers( @HeaderParam( name="Authorization" )String theAuthToken ) { // TODO: generally you don't want to get a list of them all, but allow filters or limiting how many, continuation tokens, etc
-		Conditions.checkAuthorization( validateAuthorization( theAuthToken ), "Sample", "unauthorized attempt to access resource" ); 
+	public Collection<TransportUser> getUsers( /*@HeaderParam( name="Authorization" )String theAuthToken*/ ) { // TODO: generally you don't want to get a list of them all, but allow filters or limiting how many, continuation tokens, etc
+		//Conditions.checkAuthorization( validateAuthorization( theAuthToken ), "Sample", "unauthorized attempt to access resource" ); 
 		Collection<User> users = engine.getUsers( );
 		List<TransportUser> transportUsers = new ArrayList<TransportUser>(users.size());
 		

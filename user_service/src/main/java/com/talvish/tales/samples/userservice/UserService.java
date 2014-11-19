@@ -15,10 +15,11 @@
 // ***************************************************************************
 package com.talvish.tales.samples.userservice;
 
+import com.talvish.tales.rigs.objectid.client.ObjectIdConfiguration;
+import com.talvish.tales.rigs.objectid.client.ObjectIdManager;
 import com.talvish.tales.services.Service;
 import com.talvish.tales.services.http.HttpInterface;
 import com.talvish.tales.services.http.ServiceConstants;
-import com.talvish.tales.services.http.servlets.EnableHeaderOverridesFilter;
 
 /**
  * The is an example of a user service that is built using many of the patterns
@@ -43,9 +44,8 @@ public class UserService extends Service {
 		super.onStart();
 		
 		HttpInterface httpInterface = this.interfaceManager.getInterface( ServiceConstants.PUBLIC_INTERFACE_NAME, HttpInterface.class );
-
-		userEngine = new UserEngine( this.getConfigurationManager( ) );
-		httpInterface.bind( new EnableHeaderOverridesFilter(), "/user" ); // we are in debug mode, so let's allow header overrides
+		ObjectIdManager objectIdManager = new ObjectIdManager( ObjectIdConfiguration.loadConfiguration( this.getConfigurationManager( ) ), "UserService/1.0" );
+		userEngine = new UserEngine( objectIdManager );
 		httpInterface.bind( new UserResource( userEngine ), "/user" );
 
 		// engine's typically have their own status block and those need to be  registered with a status manager

@@ -21,12 +21,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.google.common.base.Preconditions;
+
 import com.talvish.tales.businessobjects.ObjectId;
 import com.talvish.tales.communication.CommunicationException;
 import com.talvish.tales.rigs.objectid.client.ObjectIdManager;
 import com.talvish.tales.services.DependencyException;
 import com.talvish.tales.services.DependencyException.Problem;
-import com.talvish.tales.system.configuration.ConfigurationManager;
 
 /**
  * The engine is the component that actually does the work
@@ -43,14 +43,10 @@ public class UserEngine {
 	private Map<ObjectId, User> storage = new HashMap<ObjectId, User>( ); // yes, fake storage
 	private ObjectIdManager oidManager = null;
 	
-	public UserEngine( ConfigurationManager theConfigManager ) {
-		Preconditions.checkNotNull( theConfigManager, "need a config manager to set things up" );
+	public UserEngine( ObjectIdManager theOidConfigManager ) {
+		Preconditions.checkNotNull( theOidConfigManager, "need a oid manager to set things up" );
 		
-		String serviceEndpoint = theConfigManager.getStringValue( "id_service.endpoint" ); // no default, since we need it to run
-		Long idRequestAmount = theConfigManager.getLongValue( "id_service.request_amount", 100l );
-		Long idRequestThreshold = theConfigManager.getLongValue( "id_service.request_threshold", 20l );
-    	
-    	oidManager = new ObjectIdManager( idRequestAmount, idRequestThreshold, serviceEndpoint, "UserService/1.0");
+    	oidManager = theOidConfigManager;
 
 		// since we aren't building a real storage system
 		// we are faking a storage system by using a map
