@@ -34,6 +34,9 @@
                     <manifest>
                         <mainClass>com.talvish.tales.services.ServiceHost</mainClass>
                     </manifest>
+			        <manifestEntries>
+			            <Service-Version>${project.version}</Service-Version>
+			        </manifestEntries>  
                 </archive>
             </configuration>
         </plugin>
