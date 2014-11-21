@@ -24,6 +24,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.talvish.tales.businessobjects.ObjectId;
 import com.talvish.tales.client.http.ResourceClient;
+import com.talvish.tales.client.http.ResourceConfiguration;
 import com.talvish.tales.client.http.ResourceMethod;
 import com.talvish.tales.client.http.ResourceResult;
 import com.talvish.tales.communication.HttpVerb;
@@ -55,10 +56,7 @@ public class UserClient extends ResourceClient {
 			configurationManager.addSource( new PropertySource( filename ) );
 		}
 		
-		// now we prepare the client for talking to the server
-		String serviceBase = configurationManager.getStringValue( "user_service.base_url" ); // no default, since we need it to run
-
-    	UserClient client = new UserClient( serviceBase, "UserClient/1.0" );
+    	UserClient client = new UserClient( UserConfiguration.loadConfiguration( configurationManager ), "sample_user_client/1.0" );
 
     	// client.setHeaderOverride( "Authorization", "random" ); //<= for testing, perhaps want to override this value, assuming server allows overrides
 
@@ -114,11 +112,11 @@ public class UserClient extends ResourceClient {
     
     /**
      * The constructor used to create the client.
-     * @param theEndpoint the endpoint the service it located at
+     * @param theConfiguration the configuration needed to talk to the service
      * @param theUserAgent the user agent to use while talking to the service
      */
-	public UserClient( String theEndpoint, String theUserAgent ) {
-		super( theEndpoint, "/user", "20140124", theUserAgent, true ); // we are allowing untrusted SSL since the sample self-cert'ed
+	public UserClient( ResourceConfiguration theConfiguration, String theUserAgent ) {
+		super( theConfiguration, "/user", "20140124", theUserAgent ); 
 		
 		// we now define the methods that we are going to expose for calling
 		this.methods = new ResourceMethod[ 3 ];
