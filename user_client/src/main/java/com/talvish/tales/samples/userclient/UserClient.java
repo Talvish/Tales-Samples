@@ -31,7 +31,7 @@ import com.talvish.tales.communication.HttpVerb;
 import com.talvish.tales.parts.ArgumentParser;
 import com.talvish.tales.system.configuration.ConfigurationManager;
 import com.talvish.tales.system.configuration.MapSource;
-import com.talvish.tales.system.configuration.PropertySource;
+import com.talvish.tales.system.configuration.PropertyFileSource;
 
 /**
  * The client for talking to the UserService.
@@ -53,7 +53,7 @@ public class UserClient extends ResourceClient {
 		// second the file source, if the command-line indicates a file is to be used
     	String filename = configurationManager.getStringValue( "settings.file", null ); // we will store config in a file ideally
 		if( !Strings.isNullOrEmpty( filename ) ) {
-			configurationManager.addSource( new PropertySource( filename ) );
+			configurationManager.addSource( new PropertyFileSource( filename ) );
 		}
 		
     	UserClient client = new UserClient( UserConfiguration.loadConfiguration( configurationManager ), "sample_user_client/1.0" );

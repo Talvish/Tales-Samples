@@ -1,0 +1,130 @@
+{
+	"profiles" : [
+		{
+			"name" : "base",
+			"description" : "The base setup for the service.",
+			"blocks" : [
+				{
+					"name" : "networking_interfaces",
+					"description" : "Settings related to the network interfaces used in the system.",
+					"deferred" : true,
+					"settings" : [
+						{
+							"name" : "service.interfaces",
+							"value" : "public",
+							"description" : "The only interface needed is internal since this service is only used by other services."
+						},
+						
+						{
+							"name" : "service.interfaces.public.type",
+							"value" : "com.talvish.tales.services.http.HttpInterface",
+							"description" : "The java class of the interface."
+						},{
+							"name" : "service.interfaces.public.endpoints",
+							"deferred" : true,
+							"description" : "The endpoint location(s) for this interface."
+						},{
+							"name" : "service.interfaces.public.ssl.key_store",
+							"value" : "primary",
+							"description" : "The name of the key store holding the SSL certs."
+						},{
+							"name" : "service.interfaces.public.ssl.cert_alias",
+							"value" : "tales.sample",
+							"description" : "The alias of the cert that is in key store."
+						},{
+							"name" : "service.interfaces.public.connector",
+							"value" : "standard",
+							"description" : "The connector configuration to use for the interface."
+						},
+
+						{
+							"name" : "service.interfaces.admin.endpoints",
+							"deferred" : true,
+							"description" : "Admin interface is included by default and the same settings can be set like any HTTP interface, but endpoint is required."
+						}
+					]
+				},
+				{
+					"name" : "networking_connectors",
+					"description" : "Group of settings related to the connectors used by HTTP interfaces.",
+					"deferred" : true,
+					"settings" : [
+						{
+							"name" : "service.http_connectors",
+							"value" : "standard",
+							"description" : "The names of the connector configurations available to the system."
+						},{
+							"name" : "service.http_connectors.standard.idle_timeout",
+							"value" : "200",
+							"description" : "Amount of time to wait, in milliseconds, before a connection is considered idle."
+						},{
+							"name" : "service.http_connectors.standard.max_form_content_size",
+							"value" : "4194304",
+							"description" : "The maximum number of bytes that a single request is allowed to send to the service."
+						}
+					]
+				},	
+				{
+					"name" : "key_stores",
+					"description" : "Settings related to key stores used for ssl, encryption, hashing, etc.",
+					"deferred" : true,
+					"settings" : [
+						{
+							"name" : "service.security.key_stores",
+							"value" : "primary",
+							"description" : "The names of the key store configurations available to the system."
+						},{
+							"name" : "service.security.key_stores.primary.location",
+							"value" : "config\\sample.keystore",
+							"description" : "The relative location, to the service of the key store file."
+						},{
+							"name" : "service.security.key_stores.primary.password",
+							"deferred" : true,
+							"sensitive" : true,
+							"description" : "The password needed to use the key store."
+						}
+					]
+				},					
+				{
+					"name" : "simple_service",
+					"description" : "The block representing the simple service.",
+					"includes" : [ "networking_interfaces", "networking_connectors", "key_stores" ],
+					"settings" : [
+						{
+							"name" : "service.type",
+							"value" : "com.talvish.tales.samples.simpleservice.SimpleService",
+							"description" : "The Java class of the service to run."
+						}
+					]
+				}	
+			]
+		},
+		{
+			"name" : "development",
+			"description" : "The development overrides for the service. If you wish to change values for development purposes, create your own profile and extend development.",
+			"extends" : "base",
+			"blocks" : [
+				{
+					"name" : "simple_service",
+					"override" : true,
+					"settings" : [
+						{
+							"name" : "service.interfaces.public.endpoints",
+							"value" : "https://*:8443, http://*:8000",
+							"override" : true
+						},{
+							"name" : "service.interfaces.admin.endpoints",
+							"value" : "http://*:5000",
+							"override" : true
+						},{
+							"name" : "service.security.key_stores.primary.password",
+							"value" : "abc123",
+							"override" : true
+						}
+					]
+				}
+			]
+		}
+	]
+}
+

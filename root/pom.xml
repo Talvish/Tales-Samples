@@ -137,17 +137,17 @@
         <dependency>
 	   	    <groupId>com.talvish.tales</groupId>
 	   	    <artifactId>tales.common</artifactId>
-	   	    <version>1.6.1-SNAPSHOT</version>
+	   	    <version>1.6.6-SNAPSHOT</version>
 	   	</dependency>
     	<dependency>
 	   	    <groupId>com.talvish.tales</groupId>
 	   	    <artifactId>tales.client</artifactId>
-	   	    <version>1.6.1-SNAPSHOT</version>
+	   	    <version>1.6.6-SNAPSHOT</version>
 	   	</dependency>
 	   	<dependency>
 	   	    <groupId>com.talvish.tales</groupId>
 	   	    <artifactId>tales.services</artifactId>
-	   	    <version>1.6.1-SNAPSHOT</version>
+	   	    <version>1.6.6-SNAPSHOT</version>
 	   	</dependency>
 	   	<dependency>
 	   	    <groupId>com.talvish.tales.rigs</groupId>
