@@ -16,10 +16,15 @@
 package com.talvish.tales.samples.userclient;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.talvish.tales.businessobjects.BusinessObjectBase;
+import com.talvish.tales.businessobjects.ObjectId;
 import com.talvish.tales.contracts.data.DataContract;
 import com.talvish.tales.contracts.data.DataMember;
 
@@ -29,13 +34,23 @@ public class User extends BusinessObjectBase {
 	@DataMember( name = "first_name" ) private String firstName;
 	@DataMember( name = "middle_name" ) private String middleName;
 	@DataMember( name = "last_name" ) private String lastName;
-	@DataMember( name = "birthdate" ) public LocalDate birthdate;
+	@DataMember( name = "birthdate" ) private LocalDate birthdate;
 	@DataMember( name = "email_address" ) public String emailAddress;
+
+	@DataMember( name = "aliases" ) public List<String> aliases = new ArrayList<>( );
+	@DataMember( name = "settings" ) public Map<String,String> settings = new HashMap<>( );
 	
 	/**
 	 * A constructor used for serialization purposes.
 	 */
 	public User( ) {
+	}
+	
+	/**
+	 * Constructor taking the required id.
+	 */
+	public User( ObjectId theId ) {
+		super( theId );
 	}
 	
 	/**
@@ -114,5 +129,21 @@ public class User extends BusinessObjectBase {
 	public void setEmailAddress( String theEmailAddress ) {
 		// TODO: ideally this does some validation of the email address
 		emailAddress = theEmailAddress;
+	}
+
+	/**
+	 * Returns the aliases used by the user. These can be modified.
+	 * @return the list of aliases
+	 */
+	public List<String> getAliases( ) {
+		return this.aliases;
+	}
+	
+	/**
+	 * Returns the settings to use. These can be modified.
+	 * @return the settings
+	 */
+	public Map<String,String> getSettings( ) {
+		return this.settings;
 	}
 }

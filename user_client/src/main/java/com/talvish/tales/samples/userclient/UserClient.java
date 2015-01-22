@@ -71,6 +71,8 @@ public class UserClient extends ResourceClient {
 	    	if( result.getResult() != null ) {
 	    		logger.debug( "Found user: '{}'/'{}'", result.getResult().getId(), result.getResult().getFirstName( ) );
 	    		result.getResult().setFirstName( "Bilbo" );
+	    		result.getResult().getAliases( ).add( "billy" );
+	    		result.getResult().getSettings().put( "favourite_category", "games" );
 	    		result = client.updateUser( result.getResult() );
 	    		logger.debug( "Updated user: '{}'", result.getResult().getFirstName( ) );
 	    	} else {
@@ -85,6 +87,7 @@ public class UserClient extends ResourceClient {
 			user.setMiddleName( "Scott" );
 			user.setLastName( "McWhalter" );
 			user.setBirthdate( LocalDate.of( 1992, 1, 31 ) );
+			user.getAliases().add( "alias1" );
 	    	result = client.createUser( user );
 	    	if( result.getResult() != null ) {
 	    		logger.debug( "Created user: '{}'/'{}'", result.getResult().getId(), result.getResult().getFirstName( ) );

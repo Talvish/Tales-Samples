@@ -57,6 +57,9 @@ public class UserEngine {
 		user.setFirstName( "John" );		
 		user.setLastName( "Doe" );	
 		user.setBirthdate( LocalDate.of( 1980,  12,  14) );
+		user.getAliases().add( "Jims" );
+		user.getSettings().put( "home_dir", "/usr/jims" );
+		user.getSettings().put( "home_page", "/home/jims/index.html" );
 		storage.put( user.getId(), user );
 		
 		user = new User( new ObjectId( 2, 1, 100 ) );

@@ -15,13 +15,12 @@
 // ***************************************************************************
 package com.talvish.tales.samples.userservice;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.talvish.tales.businessobjects.ObjectId;
+import com.talvish.tales.communication.Status;
 import com.talvish.tales.contracts.services.http.HeaderParam;
 import com.talvish.tales.contracts.services.http.PathParam;
 import com.talvish.tales.contracts.services.http.RequestParam;
@@ -68,7 +67,7 @@ public class UserResource {
 	 * The HTTP request to get a particular user.
 	 */
 	@ResourceOperation( name="get_user", path="GET : users/{id}" )
-	public TransportUser getUser( 
+	public User getUser( 
 			@PathParam( name="id" )ObjectId theId, 
 			@HeaderParam( name="Authorization" )String theAuthToken ) {
 		Conditions.checkAuthorization( validateAuthorization( theAuthToken ), "Sample", "unauthorized attempt to access resource" ); // if invalid, throws AuthorizationException which turns into HTTP status code 401
@@ -77,60 +76,50 @@ public class UserResource {
 		User user = engine.getUser( theId );
 		// public interface doesn't support sending soft-deleted entities
 		Conditions.checkFound( user != null && !user.isDeleted(), "Could not find the user with id '%s'.", theId );  // if invalid, throws NotFoundException, which turns into HTTP status code 404
-		return TransportUser.toTransportUser( user );
+		return user;
 	}
 	
 	/**
 	 * The HTTP request to get all users.
 	 */
 	@ResourceOperation( name="get_users", path="GET : users"  )
-	public Collection<TransportUser> getUsers( /*@HeaderParam( name="Authorization" )String theAuthToken*/ ) { // TODO: generally you don't want to get a list of them all, but allow filters or limiting how many, continuation tokens, etc
+	public Collection<User> getUsers( /*@HeaderParam( name="Authorization" )String theAuthToken*/ ) { // TODO: generally you don't want to get a list of them all, but allow filters or limiting how many, continuation tokens, etc
 		//Conditions.checkAuthorization( validateAuthorization( theAuthToken ), "Sample", "unauthorized attempt to access resource" ); 
-		Collection<User> users = engine.getUsers( );
-		List<TransportUser> transportUsers = new ArrayList<TransportUser>(users.size());
-		
-		for( User user : users ) {
-			if( !user.isDeleted() ) {
-				// public interface doesn't support sending soft-deleted entities
-				transportUsers.add( TransportUser.toTransportUser( user ) );
-			}
-		}
-		return transportUsers;
+		return engine.getUsers( );
 	}
 	
 	/**
-	 * The HTTP request to create a new user in the system.
+	 * The HTTP request to create a new user in the system and showing an easy
+	 * way to set the status to return on a successful call (operation created).
 	 */
-	@ResourceOperation( name="create_user", path="GET | POST : users/create" ) // supporting GET just so a browser can easily be used for manual testing
-	public TransportUser createUser( 
-			 @RequestParam( name="user" )TransportUser theUser, 
+	@ResourceOperation( name="create_user", path="GET | POST : users/create", status=Status.OPERATION_CREATED ) // supporting GET just so a browser can easily be used for manual testing
+	public User createUser( 
+			 @RequestParam( name="user" )User theUser, 
 			 @HeaderParam( name="Authorization" )String theAuthToken ) {
 		Conditions.checkAuthorization( validateAuthorization( theAuthToken ), "Sample", "unauthorized attempt to access resource" ); 
 		Conditions.checkParameterNotNull( theUser, "user", "first name must be provided" );
 		Conditions.checkParameter( theUser.getId() == null, "user.id", "user id must be null" );
 		Conditions.checkParameter( !Strings.isNullOrEmpty( theUser.getFirstName() ), "user.first_name", "first name must be provided" );
 		
-		return TransportUser.toTransportUser( engine.createUser( TransportUser.toEngineUser(theUser) ) );
-		
-		// TODO: consider adding custom response for a 201 and/or consider the operation setting success response code
+		return engine.createUser( theUser );
 	}
 	
 	/**
 	 * The HTTP request to update a user.
 	 */
 	@ResourceOperation( name="update_user", path="GET | POST : users/{id}/update" ) // supporting GET just so a browser can easily be used for manual testing
-	public TransportUser updateUser( 
+	public User updateUser( 
 			@PathParam( name="id" )ObjectId theId, 
-			@RequestParam( name="user" )TransportUser theUser,
+			@RequestParam( name="user" )User theUser,
 			@HeaderParam( name="Authorization" )String theAuthToken ) {
 		Conditions.checkAuthorization( validateAuthorization( theAuthToken ), "Sample", "unauthorized attempt to access resource" ); 
 		Conditions.checkParameterNotNull( theId, "id", "an id must be given" );
 		Conditions.checkParameterNotNull( theUser, "user", "a user must be given" );
 		Conditions.checkParameter( theId.equals( theUser.getId( ) ), "id", "path id '%s' does not match the given user id '%s'", theId, theUser.getId() );
 		
-		User user = engine.updateUser( TransportUser.toEngineUser( theUser ) );
+		User user = engine.updateUser( theUser );
 		Conditions.checkFound( user != null, "Could not find the user with id '%s'.", theId );
-		return TransportUser.toTransportUser( user );
+		return user;
 	}
 
 	/**
