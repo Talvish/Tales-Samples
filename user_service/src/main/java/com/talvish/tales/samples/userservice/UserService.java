@@ -44,7 +44,7 @@ public class UserService extends Service {
 		super.onStart();
 		
 		HttpInterface httpInterface = this.interfaceManager.getInterface( ServiceConstants.PUBLIC_INTERFACE_NAME, HttpInterface.class );
-		ObjectIdManager objectIdManager = new ObjectIdManager( ObjectIdConfiguration.loadConfiguration( this.getConfigurationManager( ) ), this.getUserAgent() );
+		ObjectIdManager objectIdManager = new ObjectIdManager( this.getConfigurationManager( ).getValues( ObjectIdConfiguration.class ), this.getUserAgent() );
 		userEngine = new UserEngine( objectIdManager );
 		httpInterface.bind( new UserResource( userEngine ), "/user" );
 

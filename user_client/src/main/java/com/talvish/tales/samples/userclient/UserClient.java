@@ -56,7 +56,7 @@ public class UserClient extends ResourceClient {
 			configurationManager.addSource( new PropertyFileSource( filename ) );
 		}
 		
-    	UserClient client = new UserClient( UserConfiguration.loadConfiguration( configurationManager ), "sample_user_client/1.0" );
+    	UserClient client = new UserClient( configurationManager.getValues( "user_service", ResourceConfiguration.class ), "sample_user_client/1.0" );
 
     	// client.setHeaderOverride( "Authorization", "random" ); //<= for testing, perhaps want to override this value, assuming server allows overrides
 
