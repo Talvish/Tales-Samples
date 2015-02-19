@@ -65,7 +65,7 @@ public class CustomStartupService extends Service {
 		HttpInterface publicHttpInterface = new HttpInterface( ServiceConstants.PUBLIC_INTERFACE_NAME, this );
 		
 		this.interfaceManager.register( publicHttpInterface );
-		publicHttpInterface.bind( new SimpleResource( ), "/simple_contract", new ResourceConfiguration( null, 500l ) );
+		publicHttpInterface.bind( new SimpleResource( ), "/simple_contract", new ResourceConfiguration( ).setExecutionTimeout( 500l ) );
 		
 		// setup the management interface
 		// (yes it is the same resource, but this is just demonstrating the ability to create additional interfaces)
@@ -73,7 +73,12 @@ public class CustomStartupService extends Service {
 		
 		this.interfaceManager.register( managementHttpInterface );
 		// now we demonstrate using a custom defined thread pool and execution timeout for the resource 
-		managementHttpInterface.bind( new SimpleResource( ), "/simple_contract", new ResourceConfiguration( "custom", this.getConfigurationManager().getLongValue( "service.resource_execution_timeout", ThreadingConstants.DEFAULT_RESOURCE_EXECUTION_TIMEOUT ) ) );
+		managementHttpInterface.bind( 
+				new SimpleResource( ), 
+				"/simple_contract", 
+				new ResourceConfiguration( )
+					.setThreadPoolName( "custom" )
+					.setExecutionTimeout( this.getConfigurationManager().getLongValue( "service.resource_execution_timeout", ThreadingConstants.DEFAULT_RESOURCE_EXECUTION_TIMEOUT ) ) );
 	}
 	
     public static void main( String[ ] theArgs ) throws Exception {

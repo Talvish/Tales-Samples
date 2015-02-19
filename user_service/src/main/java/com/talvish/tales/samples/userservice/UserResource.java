@@ -75,7 +75,7 @@ public class UserResource {
 		
 		User user = engine.getUser( theId );
 		// public interface doesn't support sending soft-deleted entities
-		Conditions.checkFound( user != null && !user.isDeleted(), "Could not find the user with id '%s'.", theId );  // if invalid, throws NotFoundException, which turns into HTTP status code 404
+		Conditions.checkFound( user != null && !user.isDeleted(), "id", "Could not find the user with id '%s'.", theId );  // if invalid, throws NotFoundException, which turns into HTTP status code 404
 		return user;
 	}
 	
@@ -118,7 +118,7 @@ public class UserResource {
 		Conditions.checkParameter( theId.equals( theUser.getId( ) ), "id", "path id '%s' does not match the given user id '%s'", theId, theUser.getId() );
 		
 		User user = engine.updateUser( theUser );
-		Conditions.checkFound( user != null, "Could not find the user with id '%s'.", theId );
+		Conditions.checkFound( user != null, "id", "Could not find the user with id '%s'.", theId );
 		return user;
 	}
 
@@ -133,7 +133,7 @@ public class UserResource {
 		Conditions.checkParameter( theId != null, "id", "an id must be given" );
 		
 		boolean deleted = engine.deleteUser( theId );
-		Conditions.checkFound( deleted, "Could not find the user with id '%s'.", theId );
+		Conditions.checkFound( deleted, "id", "Could not find the user with id '%s'.", theId );
 	}
 	
 

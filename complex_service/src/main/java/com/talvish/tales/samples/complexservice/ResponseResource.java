@@ -61,9 +61,9 @@ public class ResponseResource {
 	 */
 	@ResourceOperation( name="return_custom_failure", path="GET : return_custom_failure" )
 	public ResourceResult<String> returnCustomFailure( ) {
-		ResourceResult<String> result = new ResourceResult<String>( );
-	
-		result.setResult( Status.CALLER_UNAUTHORIZED, "custom_error", "This call is unauthorized.", null);
+		ResourceResult<String> result = new ResourceResult<String>( )
+				.setResult( Status.CALLER_UNAUTHORIZED, "custom_error", null )
+				.setMessage( "This call is unauthorized." );
 		return result;
 	}
 
