@@ -21,12 +21,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.google.common.base.Preconditions;
-
 import com.talvish.tales.businessobjects.ObjectId;
 import com.talvish.tales.communication.CommunicationException;
+import com.talvish.tales.communication.DependencyException;
+import com.talvish.tales.communication.DependencyException.Problem;
 import com.talvish.tales.rigs.objectid.client.ObjectIdManager;
-import com.talvish.tales.services.DependencyException;
-import com.talvish.tales.services.DependencyException.Problem;
 
 /**
  * The engine is the component that actually does the work

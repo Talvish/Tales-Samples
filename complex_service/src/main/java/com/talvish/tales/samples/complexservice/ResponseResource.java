@@ -16,13 +16,13 @@
 package com.talvish.tales.samples.complexservice;
 
 import com.google.common.base.Strings;
+import com.talvish.tales.communication.DependencyException;
+import com.talvish.tales.communication.DependencyException.Problem;
 import com.talvish.tales.communication.Status;
 import com.talvish.tales.contracts.services.http.RequestParam;
 import com.talvish.tales.contracts.services.http.ResourceContract;
 import com.talvish.tales.contracts.services.http.ResourceOperation;
 import com.talvish.tales.contracts.services.http.ResourceResult;
-import com.talvish.tales.services.DependencyException;
-import com.talvish.tales.services.DependencyException.Problem;
 import com.talvish.tales.system.Conditions;
 
 /***
