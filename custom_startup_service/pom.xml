@@ -4,14 +4,13 @@
   <name>Sample Custom Startup Sample</name>
   <description>A sample showing how to do a complete custom startup of a service.</description>
 
-
   <parent>
     <groupId>com.talvish.tales.samples</groupId>
     <artifactId>tales.samples.root</artifactId>
     <version>0.5.0-SNAPSHOT</version>
     <relativePath>../root/pom.xml</relativePath>  
   </parent>
-  
+
   <build>
     <sourceDirectory>src/main/java</sourceDirectory>
     <plugins>
@@ -61,6 +60,10 @@
 		<groupId>com.talvish.tales</groupId>
 		<artifactId>tales.services</artifactId>
 	</dependency>
+  	<dependency>
+    	<groupId>joda-time</groupId>
+    	<artifactId>joda-time</artifactId>
+	</dependency> 
 	<dependency>
 	    <groupId>com.google.guava</groupId>
 	    <artifactId>guava</artifactId>

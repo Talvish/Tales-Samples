@@ -23,7 +23,7 @@ import com.talvish.tales.contracts.services.http.RequestParam;
 import com.talvish.tales.contracts.services.http.ResourceContract;
 import com.talvish.tales.contracts.services.http.ResourceOperation;
 import com.talvish.tales.contracts.services.http.ResourceResult;
-import com.talvish.tales.system.Conditions;
+import com.talvish.tales.validation.Conditions;
 
 /***
  * This a very simple contract with two operations. One that will
